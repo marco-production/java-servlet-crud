@@ -7,7 +7,9 @@
     </head>
     <body>
         <!-- Header -->
-        <jsp:include page="../WEB-INF/components/header.jsp" />
+        <jsp:include page="../WEB-INF/components/header.jsp">
+            <jsp:param name="title" value="Clients Registrated"></jsp:param>
+        </jsp:include>
 
         <!-- Add new section -->
         <jsp:include page="../WEB-INF/components/newClientSection.jsp" />

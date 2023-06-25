@@ -58,37 +58,34 @@ public class ClientDAO implements ClientInterface {
     }
 
     @Override
-    public Client toShow(Client client) {
+    public Client toShow(int id) {
         Connection cn = null;
         PreparedStatement stmt = null;
         ResultSet resultSet = null;
+        Client client = null;
 
         try {
             cn = Conexion.getConnection();
             stmt = cn.prepareStatement(SQL_SELECT_BY_ID);
-            stmt.setInt(1, client.getId());
+            stmt.setInt(1, id);
             resultSet = stmt.executeQuery();
 
-            // Nos posicionamos en el elemento 1.
-            resultSet.absolute(1);
+            // Nos posicionamos en el elemento 1. - resultSet.absolute(1);
+            
+            while (resultSet.next()) {
+                String name = resultSet.getString("name"),
+                        lastname = resultSet.getString("lastname"),
+                        email = resultSet.getString("email"),
+                        phoneNumber = resultSet.getString("phone_number");
 
-            String name = resultSet.getString("name"),
-                    lastname = resultSet.getString("lastname"),
-                    email = resultSet.getString("email"),
-                    phoneNumber = resultSet.getString("phone_number");
+                double balance = resultSet.getDouble("balance");
 
-            double balance = resultSet.getDouble("balance");
+                Timestamp createdAt = resultSet.getTimestamp("created_at"),
+                        updatedAt = resultSet.getTimestamp("updated_at");
 
-            Timestamp createdAt = resultSet.getTimestamp("created_at"),
-                    updatedAt = resultSet.getTimestamp("updated_at");
-
-            client.setName(name);
-            client.setLastname(lastname);
-            client.setEmail(email);
-            client.setBalance(balance);
-            client.setPhoneNumber(phoneNumber);
-            client.setCreatedAt(createdAt);
-            client.setUpdatedAt(updatedAt);
+                client = new Client(id, name, lastname, email, phoneNumber, balance, createdAt, updatedAt);
+                break;
+            }
 
         } catch (SQLException ex) {
             ex.printStackTrace(System.out);
@@ -172,7 +169,7 @@ public class ClientDAO implements ClientInterface {
             stmt.setDouble(5, client.getBalance());
             stmt.setInt(6, client.getId());
 
-            stmt.executeQuery();
+            rows = stmt.executeUpdate();
 
         } catch (SQLException ex) {
             ex.printStackTrace(System.out);
@@ -189,7 +186,7 @@ public class ClientDAO implements ClientInterface {
     }
 
     @Override
-    public int toDelete(Client client) {
+    public int toDelete(int id) {
         Connection cn = null;
         PreparedStatement stmt = null;
         int rows = 0;
@@ -197,9 +194,9 @@ public class ClientDAO implements ClientInterface {
         try {
             cn = Conexion.getConnection();
             stmt = cn.prepareStatement(SQL_DELETE);
-            stmt.setInt(6, client.getId());
+            stmt.setInt(1, id);
 
-            stmt.executeQuery();
+            rows = stmt.executeUpdate();
 
         } catch (SQLException ex) {
             ex.printStackTrace(System.out);

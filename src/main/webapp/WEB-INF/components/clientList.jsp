@@ -17,8 +17,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="client" items="${clients}">
-
+                        <c:forEach var="client" items="${clients}" varStatus="status">
+                            <!--varStatus tienes propiedades propias de la iteracion del foreach-->
+                            <!-- status.count (Retorna el numero de la iteracion) -->
                             <tr>
                                 <th>${client.id}</th>
                                 <td>${client.name}</td>
@@ -27,9 +28,9 @@
                                 <td>${client.phoneNumber}</td>
                                 <td>${client.balance}</td>
                                 <td>
-                                    <a class="btn btn-info" href="#" role="button">View</a>
+                                    <a class="btn btn-info" href="${pageContext.request.contextPath}/ClientController?id=${client.id}" role="button">View</a>
                                     <a class="btn btn-warning" href="#" role="button">Edit</a>
-                                    <a class="btn btn-danger" href="#" role="button">Delete</a>
+                                    <a class="btn btn-danger" href="${pageContext.request.contextPath}/ClientController?id=${client.id}&delete=true" role="button">Delete</a>
                                 </td>
                             </tr>
                         </c:forEach>

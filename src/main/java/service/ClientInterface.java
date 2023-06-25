@@ -15,11 +15,11 @@ public interface ClientInterface {
     
     int toAdd(Client client);
     
-    Client toShow(Client client);
+    Client toShow(int id);
     
     List<Client> toList();
     
     int toUpdate(Client client);
     
-    int toDelete(Client client);
+    int toDelete(int id);
 }
