@@ -8,8 +8,8 @@
                     <thead>
                         <tr>
                             <th scope="col">Id</th>
-                            <th scope="col">First</th>
-                            <th scope="col">Last</th>
+                            <th scope="col">First name</th>
+                            <th scope="col">Last name</th>
                             <th scope="col">Email</th>
                             <th scope="col">Phone Number</th>
                             <th scope="col">Balance</th>

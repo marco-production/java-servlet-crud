@@ -23,13 +23,25 @@ public class ClientController extends HttpServlet {
     
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
-        List<Client> clients = new ClientDAO().toList();
-        System.out.println("Clients: " + clients);
+        ClientController.getClientList(req, res);
+    }
+    
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         
-        req.setAttribute("clients", clients);
-        req.setAttribute("totalBalance", ClientController.totalBalance(clients));
-        req.setAttribute("totalClients", clients.size());
-        req.getRequestDispatcher("clients.jsp").forward(req, res);
+        String fisrtName = req.getParameter("firstName");
+        String lastName = req.getParameter("lastName");
+        String email = req.getParameter("email");
+        String phoneNumber = !"".equals(req.getParameter("phoneNumber")) ? req.getParameter("phoneNumber") : null;
+        double balance = !"".equals(req.getParameter("balance")) ? Double.parseDouble(req.getParameter("balance")) : 0;
+        
+        Client client = new Client(fisrtName, lastName, email, phoneNumber, balance);
+        int clientDao = new ClientDAO().toAdd(client);
+        
+        System.out.println(client.toString());
+        System.out.println("clientDao: " + clientDao);
+        
+        ClientController.getClientList(req, res);
     }
     
     protected static double totalBalance(List<Client> clients) {
@@ -40,5 +52,13 @@ public class ClientController extends HttpServlet {
        }
        
        return total;
+    }
+    
+    protected static void getClientList(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
+        List<Client> clients = new ClientDAO().toList();
+        req.setAttribute("clients", clients);
+        req.setAttribute("totalBalance", ClientController.totalBalance(clients));
+        req.setAttribute("totalClients", clients.size());
+        req.getRequestDispatcher("views/clients.jsp").forward(req, res);
     }
 }

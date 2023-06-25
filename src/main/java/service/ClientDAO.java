@@ -41,7 +41,7 @@ public class ClientDAO implements ClientInterface {
             stmt.setString(4, client.getPhoneNumber());
             stmt.setDouble(5, client.getBalance());
 
-            stmt.executeQuery();
+            rows = stmt.executeUpdate();
 
         } catch (SQLException ex) {
             ex.printStackTrace(System.out);

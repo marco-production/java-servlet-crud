@@ -4,7 +4,9 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <button type="button" class="btn btn-success"><h5>+ Add new client</h5></button>
+               <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                + Add new client
+              </button>
             </div>
             <div class="col-md-3">
                 <div class="card text-bg-primary mb-3 text-center" style="max-width: 18rem;">
