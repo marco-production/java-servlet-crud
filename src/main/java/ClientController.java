@@ -37,10 +37,8 @@ public class ClientController extends HttpServlet implements Serializable  {
             
         } else {
             if(Boolean.parseBoolean(delete) == true){
-                System.out.println("ESTOY ADENTRO");
                 new ClientDAO().toDelete(Integer.parseInt(id));
             }
-            System.out.println("ESTOY AFUERA " + Boolean.parseBoolean(delete));
             ClientController.getClientList(req, res);
         }
     }
